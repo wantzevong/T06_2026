@@ -13,6 +13,7 @@ const drawScatterplot = (data) => {
     const xExtent = d3.extent(data, d => d.star);
     const yExtent = d3.extent(data, d => d.screenSize);
 
+    // Map star ratings and screen sizes to positions within the chart area.
     const xScaleS = d3.scaleLinear()
         .domain([xExtent[0] - 0.5, xExtent[1] + 0.5])
         .range([0, innerWidth]);
@@ -69,6 +70,7 @@ const drawScatterplot = (data) => {
         .attr('class', 'legend')
         .attr('transform', `translate(${width - 140}, ${margin.top})`);
 
+    // Show each screen technology with its matching point colour.
     uniqueTechs.forEach((tech, i) => {
         const g = legend.append('g').attr('transform', `translate(0, ${i * 22})`);
         g.append('rect')

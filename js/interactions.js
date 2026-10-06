@@ -1,4 +1,4 @@
-
+// Build the screen-technology buttons and connect them to histogram filtering.
 const populateFilters = (data) => {
     d3.select("#filters_screen")
         .selectAll(".filter")
@@ -26,10 +26,12 @@ const populateFilters = (data) => {
 };
 
 const updateHistogram = (filterId, data) => {
+    // Select all TVs or only TVs with the selected screen technology.
     const updatedData = filterId === "all"
         ? data
         : data.filter(tv => tv.screenTech === filterId);
 
+    // Re-bin the selected data and animate the histogram bars to their new heights.
     const updatedBins = binGenerator(updatedData);
 
     d3.selectAll("#histogram rect")
@@ -41,7 +43,7 @@ const updateHistogram = (filterId, data) => {
         .attr("height", d => innerHeight - yScale(d.length));
 };
 
-// Create the tooltip for the scatterplot
+// Add a hidden tooltip group inside the scatterplot for displaying a TV's screen size.
 const createTooltip = () => {
     const tooltip = innerChartS
         .append("g")
@@ -71,7 +73,7 @@ const createTooltip = () => {
         .style("font-weight", 900);
 };
 
-// Handle mouse events for the scatterplot
+// Show the hovered point's screen size and hide the tooltip when the pointer leaves.
 const handleMouseEvents = () => {
     const tooltip = innerChartS.select(".tooltip");
 
