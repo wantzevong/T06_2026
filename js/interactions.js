@@ -77,29 +77,29 @@ const handleMouseEvents = () => {
 
     innerChartS.selectAll("circle")
         .on("mouseenter", (e, d) => {
-            // Update the tooltip text
             tooltip.select("text")
                 .text(`${d.screenSize} inches`);
 
             // Get the hovered circle's position
-            const cx = e.target.getAttribute("cx");
-            const cy = e.target.getAttribute("cy");
+            const cx = +e.target.getAttribute("cx");
+            const cy = +e.target.getAttribute("cy");
 
             // Centre the tooltip above the circle
-            d3.select(".tooltip")
+            tooltip
+                .interrupt()
                 .attr(
                     "transform",
-                    `translate(${cx - 0.5*tooltipWidth},
-                               ${cy - 1.5*tooltipHeight})`
+                    `translate(${cx - 0.5 * tooltipWidth},
+                               ${cy - 1.5 * tooltipHeight})`
                 )
                 .transition()
                 .duration(200)
                 .style("opacity", 1);
         })
-        .on("mouseleave", (e, d) => {
-            console.log("Mouse left circle", d);
-            d3.select(".tooltip")
+        .on("mouseleave", () => {
+            tooltip
+                .interrupt()
                 .style("opacity", 0)
-                .attr("transform", `translate(0, 500)`); // Move the tooltip off-screen
+                .attr("transform", "translate(0, 500)");
         });
 };

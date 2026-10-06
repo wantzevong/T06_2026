@@ -9,8 +9,12 @@ const innerHeight = height - margin.top - margin.bottom;
 let innerChartS;
 
 // Size for tooltips
-const tooltipWidth = 65;
-const tooltipHeight = 32;
+const tooltipWidth = 110;
+const tooltipHeight = 36;
+
+// make binGenerator accessible globally
+const binGenerator = d3.bin()
+    .value(d => d.energyConsumption);
 
 /* Make the colours accessible globally */
 /****************************************/

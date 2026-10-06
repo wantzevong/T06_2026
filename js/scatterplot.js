@@ -23,8 +23,10 @@ const drawScatterplot = (data) => {
         .nice();
 
     // Set up colours for screen technologies
+    const uniqueTechs = [...new Set(data.map(d => d.screenTech))];
+
     colorScale
-        .domain(data.map(d=> d.screenTech))
+        .domain(uniqueTechs)
         .range(d3.schemeCategory10);
 
     // Draw the circles
@@ -34,7 +36,7 @@ const drawScatterplot = (data) => {
         .attr("cx", d => xScaleS(d.star))
         .attr("cy", d => yScaleS(d.screenSize))
         .attr("r", 4)
-        .attr("fill", d => colorScaleS(d.screenTech))
+        .attr("fill", d => colorScale(d.screenTech))
         .attr("opacity", 0.5);
 
     // Add axes
@@ -72,7 +74,7 @@ const drawScatterplot = (data) => {
         g.append('rect')
             .attr('width', 12)
             .attr('height', 12)
-            .attr('fill', colorScaleS(tech));
+            .attr('fill', colorScale(tech));
         g.append('text')
             .attr('x', 18)
             .attr('y', 10)
